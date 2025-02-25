@@ -1,7 +1,7 @@
 <?php
 namespace Hp\Qlktx\Models;
 use PDO;
-class Phong
+class ThongKe
 {
     public ?PDO $db;
     public string $ma_phong;
@@ -122,22 +122,15 @@ class Phong
         return $statement->fetchColumn() > 0;
     }
 
-    public function getAll($orderBy = 'ma_phong', $orderDirection = 'ASC')
+    public function getAll():array 
     {
-        $query = "SELECT * FROM phong ORDER BY $orderBy $orderDirection";
-        $stmt = $this->db->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll();
+        $stmt = $this->db->query("SELECT * FROM Phong");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function search($criteria, $orderBy = 'ma_phong', $orderDirection = 'ASC')
-    {
-        $query = "SELECT * FROM phong WHERE 1=1";
+    public function search(array $criteria): array {
+        $query = "SELECT * FROM Phong WHERE 1=1";
         $params = [];
 
-        if (!empty($criteria['ten_phong'])) {
-            $query .= " AND ten_phong LIKE :ten_phong";
-            $params['ten_phong'] = '%' . $criteria['ten_phong'] . '%';
-        }
         if (!empty($criteria['dien_tich'])) {
             $query .= " AND dien_tich = :dien_tich";
             $params['dien_tich'] = $criteria['dien_tich'];
@@ -150,30 +143,77 @@ class Phong
             $query .= " AND gioi_tinh = :gioi_tinh";
             $params['gioi_tinh'] = $criteria['gioi_tinh'];
         }
-        
-        $query .= " ORDER BY $orderBy $orderDirection";
+
         $stmt = $this->db->prepare($query);
         $stmt->execute($params);
-        return $stmt->fetchAll();
-    }
-    public function getRoomNames(): array {
-        $query = "SELECT DISTINCT ten_phong FROM Phong";
-        $stmt = $this->db->query($query);
-        return $stmt->fetchAll(PDO::FETCH_COLUMN);
-    }
-    
-    // Phương thức đếm tổng số phòng
-    public function countAllRooms(): int
-    {
-        $statement = $this->db->query("SELECT COUNT(*) FROM Phong");
-        return (int) $statement->fetchColumn();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Phương thức đếm số phòng còn trống
-    // public function countAvailableRooms(): int
-    // {
-    //     // Giả sử `trang_thai` là cột trong bảng `Phong` để đánh dấu phòng trống
-    //     $statement = $this->db->query("SELECT COUNT(*) FROM Phong WHERE trang_thai = 'trong'");
-    //     return (int) $statement->fetchColumn();
-    // }
+    public function getCurrentStudentsRenting(): int
+    {
+        $stmt = $this->db->query("SELECT count_current_students_renting()");
+        return $stmt->fetchColumn();
+    }
+
+    public function getTotalRooms(): int
+    {
+        $stmt = $this->db->query("SELECT count_total_rooms()");
+        return $stmt->fetchColumn();
+    }
+
+    public function getRentedRooms(): int
+    {
+        $stmt = $this->db->query("SELECT count_rented_rooms()");
+        return $stmt->fetchColumn();
+    }
+
+    public function getAvailableRooms(): int
+    {
+        $stmt = $this->db->query("SELECT countAvailableRooms()");
+        return $stmt->fetchColumn();
+    }
+
+    public function getTotalRevenue(): float
+    {
+        $stmt = $this->db->query("SELECT total_revenue()");
+        return $stmt->fetchColumn();
+    }
+
+    public function getMaleRooms(): int
+    {
+        $stmt = $this->db->query("SELECT countMaleRooms()");
+        return $stmt->fetchColumn();
+    }
+
+    public function getFemaleRooms(): int
+    {
+        $stmt = $this->db->query("SELECT countFemaleRooms()");
+        return $stmt->fetchColumn();
+    }
+
+    public function getMaleStudentsRenting(): int
+    {
+        $stmt = $this->db->query("SELECT countMaleStudentsRenting()");
+        return $stmt->fetchColumn();
+    }
+
+    public function getFemaleStudentsRenting(): int
+    {
+        $stmt = $this->db->query("SELECT countFemaleStudentsRenting()");
+        return $stmt->fetchColumn();
+    }
+
+    public function getTotalDeposit(): float
+    {
+        $stmt = $this->db->query("SELECT totalDeposit()");
+        return $stmt->fetchColumn();
+    }
+
+    public function getTotalPayment(): float
+    {
+        $stmt = $this->db->query("SELECT totalPayment()");
+        return $stmt->fetchColumn();
+    }
+
+    
 }

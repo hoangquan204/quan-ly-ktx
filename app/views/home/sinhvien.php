@@ -3,46 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Chủ - Sinh Viên</title>
+    <title>Quản Lý KTX - Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
-        <a class="navbar-brand" href="#">KTX Sinh Viên</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="#">Thông Tin Phòng</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Hợp Đồng</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Thanh Toán</a></li>
-                <li class="nav-item"><a class="nav-link btn btn-danger text-white" href="logout.php">Đăng Xuất</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<?php include "../app/views/layout/header.php"; ?>
 
 <div class="container mt-4">
-    <h2 class="text-center">Chào mừng, Sinh Viên!</h2>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card p-3">
-                <h5>Thông Tin Phòng</h5>
-                <p><strong>Mã Phòng:</strong> P101</p>
-                <p><strong>Loại Phòng:</strong> Thường</p>
-                <p><strong>Trạng Thái:</strong> Đầy</p>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col">
+            <div class="card text-center p-3">
+            <i class="fas fa-user fa-3x mb-2"></i>
+                <h5 class="card-title">Thông tin cá nhân</h5>
+                <p class="card-text">Xem và cập nhật thông tin của bạn trên hệ thống.</p>
+                <a href="/my-info" class="btn btn-light">Xem chi tiết</a>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card p-3">
-                <h5>Trạng Thái Thanh Toán</h5>
-                <p><strong>Tháng 2/2024:</strong> Chưa Thanh Toán</p>
-                <p><strong>Tháng 1/2024:</strong> Đã Thanh Toán</p>
+        
+        <div class="col">
+            <div class="card text-center p-3">
+                <i class="fas fa-bed fa-3x mb-2"></i>
+                <h5 class="card-title">Phòng đang ở</h5>
+                <p class="card-text">Xem trạng thái của phòng bạn đang ở.</p>
+                <a href="/current" class="btn btn-light">Xem chi tiết</a>
+            </div>
+        </div>
+        
+        <div class="col">
+            <div class="card text-center p-3">
+                <i class="fas fa-list fa-3x mb-2"></i>
+                <h5 class="card-title">Danh sách phòng</h5>
+                <p class="card-text">Xem danh dách phòng có trên hệ thống.</p>
+                <a href="/phong" class="btn btn-light">Xem chi tiết</a>
+            </div>
+        </div>
+        
+        <div class="col">
+            <div class="card text-center p-3">
+                <i class="fas fa-money-bill fa-3x mb-2"></i>
+                <h5 class="card-title">Thanh toán hóa đơn</h5>
+                <p class="card-text">Thanh toán và xem lịch sử thanh toán hóa đơn.</p>
+                <a href="#" class="btn btn-light">Xem chi tiết</a>
             </div>
         </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<?php include "../app/views/layout/footer.php"; ?>
 </body>
 </html>

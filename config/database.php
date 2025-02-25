@@ -1,30 +1,15 @@
 <?php
-class Database {
-    private $host = "localhost";
-    private $dbname = "QuanLyKTX_QTDL";
-    private $username = "root";
-    private $password = "";
-    private $conn;
 
-    public function __construct() {
-        $this->connect(); // Gọi connect() khi khởi tạo Database
-    }
+// db.php
+$host = 'localhost';
+$db = 'QuanLyKTX_QTDL';
+$user = 'root';
 
-    private function connect() { // Đổi thành private
-        try {
-            $this->conn = new PDO(
-                "mysql:host=" . $this->host . ";dbname=" . $this->dbname . ";charset=utf8",
-                $this->username,
-                $this->password
-            );
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die("Lỗi kết nối cơ sở dữ liệu: " . $e->getMessage());
-        }
-    }
+$pass = '';
 
-    public function getConnection() { // Phương thức này để lấy kết nối
-        return $this->conn;
-    }
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
 }
-?>

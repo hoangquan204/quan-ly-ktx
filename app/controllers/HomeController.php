@@ -1,21 +1,35 @@
 <?php
-class HomeController {
-    public function index() {
-        session_start(); // Đảm bảo session hoạt động
+// app/controllers/PhongController.php
+namespace Hp\Qlktx\Controllers;
 
-        // Kiểm tra nếu người dùng đã đăng nhập hay chưa
-        if (!isset($_SESSION["user"]["role"])) {
-            header("Location: /AuthController/login"); // Chuyển hướng nếu chưa đăng nhập
-            exit;
-        }
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PDOException;
 
-        // Tự động điều hướng đến trang theo vai trò
-        if ($_SESSION["user"]["role"] === "nhanvien") {
-            header("Location: /nhanvien/home");
-        } elseif ($_SESSION["user"]["role"] === "sinhvien") {
-            header("Location: /sinhvien/home");
-        } else {
-            die("Lỗi: Vai trò không hợp lệ!");
-        }
+use Hp\Qlktx\Models\Phong;
+use Hp\Qlktx\Models\ThuePhong;
+use Hp\Qlktx\Models\SinhVien;
+class HomeController
+{
+    private $phongModel;
+
+    public function __construct($pdo)
+    {
+        $this->phongModel = new Phong($pdo);
+    }
+
+    public function SVhome()
+    {
+        include '../app/views/home/sinhvien.php';
+    }
+
+    public function NVhome()
+    {
+        include '../app/views/home/nhanvien.php';
+    }
+
+    public function ContactPage()
+    {
+        include '../app/views/Contact/index.php';
     }
 }
