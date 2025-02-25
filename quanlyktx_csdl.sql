@@ -2,8 +2,8 @@
 DROP DATABASE IF EXISTS QuanLyKTX;
 
 -- Tạo database mới
-CREATE DATABASE QuanLyKTX;
-USE QuanLyKTX;
+CREATE DATABASE QuanLyKTX_QTDL;
+USE QuanLyKTX_QTDL;
 
 -- Tạo bảng Phòng (Bảng cha)
 CREATE TABLE Phong (
@@ -25,6 +25,7 @@ CREATE TABLE SinhVien (
     Email VARCHAR(100) UNIQUE NOT NULL,
     DiaChi TEXT NOT NULL,
     MaPhong VARCHAR(10),
+    MatKhau VARCHAR(255) NOT NULL -- Mật khẩu (đã mã hóa),
     FOREIGN KEY (MaPhong) REFERENCES Phong(MaPhong) ON DELETE SET NULL
 );
 
@@ -53,17 +54,22 @@ CREATE TABLE ThanhToan (
     FOREIGN KEY (MaSV) REFERENCES SinhVien(MaSV) ON DELETE CASCADE
 );
 
--- Tạo bảng Người Dùng (Quản trị hệ thống)
-CREATE TABLE NguoiDung (
-    TenDangNhap VARCHAR(50) PRIMARY KEY,
-    MatKhau VARCHAR(255) NOT NULL,
-    VaiTro ENUM('Admin', 'NhanVien') NOT NULL
+CREATE TABLE NhanVien (
+    MaNV VARCHAR(10) PRIMARY KEY, -- Mã nhân viên (khóa chính)
+    HoTen VARCHAR(100) NOT NULL, -- Họ và tên nhân viên
+    NgaySinh DATE NOT NULL, -- Ngày sinh
+    GioiTinh ENUM('Nam', 'Nữ') NOT NULL, -- Giới tính
+    SoDienThoai VARCHAR(15) NOT NULL, -- Số điện thoại
+    Email VARCHAR(100) UNIQUE NOT NULL, -- Email (duy nhất)
+    DiaChi TEXT NOT NULL, -- Địa chỉ
+    ChucVu ENUM('Quản lý', 'Nhân viên') NOT NULL, -- Chức vụ
+    MatKhau VARCHAR(255) NOT NULL -- Mật khẩu (đã mã hóa)
 );
 
--- Chèn dữ liệu mẫu vào bảng Người Dùng
-INSERT INTO NguoiDung (TenDangNhap, MatKhau, VaiTro) VALUES 
-('admin', '123456', 'Admin'),
-('nhanvien01', '123456', 'NhanVien');
+INSERT INTO NhanVien (MaNV, HoTen, NgaySinh, GioiTinh, SoDienThoai, Email, DiaChi, ChucVu, MatKhau) VALUES 
+('NV001', 'Nguyễn Văn A', '1990-01-15', 'Nam', '0123456789', 'nguyenvana@gmail.com', 'Hà Nội', 'Quản lý', '123456'),
+('NV002', 'Trần Thị B', '1995-05-20', 'Nữ', '0987654321', 'tranthib@gmail.com', 'Hồ Chí Minh', 'Nhân viên', '123456');
+
 
 -- Chèn dữ liệu mẫu vào bảng Phòng
 INSERT INTO Phong (MaPhong, LoaiPhong, SoLuongToiDa, GiaPhong, TrangThai) VALUES 
