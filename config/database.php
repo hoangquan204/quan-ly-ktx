@@ -2,7 +2,7 @@
 
 // db.php
 $host = 'localhost';
-$db = 'QuanLyKTX_QTDL';
+$db = 'qlktx';
 $user = 'root';
 
 $pass = '';

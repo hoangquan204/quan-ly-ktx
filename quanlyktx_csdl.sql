@@ -1,28 +1,80 @@
-drop database if exists `quanlyktx_qtdl`;
-create database quanlyktx_qtdl;
-use quanlyktx_qtdl;
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+--
+-- Host: localhost    Database: qlktx
+-- ------------------------------------------------------
+-- Server version	8.0.37
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `hoc_ky`
+--
+drop database if exists `qlktx`;
+create database qlktx;
+use qlktx;
 
 DROP TABLE IF EXISTS `hoc_ky`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `hoc_ky` (
   `ma_hoc_ky` varchar(10) NOT NULL,
   `ten_hoc_ky` varchar(100) DEFAULT NULL,
   `bat_dau` date DEFAULT NULL,
   `ket_thuc` date DEFAULT NULL,
   PRIMARY KEY (`ma_hoc_ky`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hoc_ky`
+--
+
+LOCK TABLES `hoc_ky` WRITE;
+/*!40000 ALTER TABLE `hoc_ky` DISABLE KEYS */;
 INSERT INTO `hoc_ky` VALUES ('HK1','Học Kỳ 1','2024-09-01','2025-01-15'),('HK2','Học Kỳ 2','2025-02-01','2025-05-01'),('HK3','Học Kỳ 3','2025-06-01','2025-09-01');
+/*!40000 ALTER TABLE `hoc_ky` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `lop`
+--
 
 DROP TABLE IF EXISTS `lop`;
-
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lop` (
   `ma_lop` varchar(10) NOT NULL,
   `ten_lop` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`ma_lop`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `lop`
+--
+
+LOCK TABLES `lop` WRITE;
+/*!40000 ALTER TABLE `lop` DISABLE KEYS */;
 INSERT INTO `lop` VALUES ('CNTT','Công nghệ thông tin'),('KDNG','Kinh doanh nông nghiệp'),('KTNN','Kinh tế nông nghiệp'),('LHC','Luật hành chính'),('NNA','Ngôn Ngữ Anh'),('QTKD','Quản trị kinh doanh');
+/*!40000 ALTER TABLE `lop` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `nhanvien`
+--
 
 DROP TABLE IF EXISTS `nhanvien`;
-
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `nhanvien` (
   `ma_nhan_vien` varchar(8) NOT NULL,
   `ho_ten` varchar(100) DEFAULT NULL,
@@ -30,10 +82,17 @@ CREATE TABLE `nhanvien` (
   `ghi_chu` text,
   `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ma_nhan_vien`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `nhanvien`
+--
+
+LOCK TABLES `nhanvien` WRITE;
+/*!40000 ALTER TABLE `nhanvien` DISABLE KEYS */;
 INSERT INTO `nhanvien` VALUES ('NVKTXA00','admin','1234567890','admin','e10adc3949ba59abbe56e057f20f883e'),('NVKTXA01','Nguyễn Hoài Đức','0898821595','nhan vien','e10adc3949ba59abbe56e057f20f883e'),('NVKTXA03','Hồ Hoàng Hảo','0989765432','nhan vien','e10adc3949ba59abbe56e057f20f883e'),('NVKTXA04','Trịnh Huỳnh Phúc Khang','0989765432','nhan vien','e10adc3949ba59abbe56e057f20f883e'),('NVKTXA05','Trương Hoàng Anh','0988133860','nhan vien','e10adc3949ba59abbe56e057f20f883e');
-
+/*!40000 ALTER TABLE `nhanvien` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -68,6 +127,29 @@ DELIMITER ;
 -- Table structure for table `nhanvien_counter`
 --
 
+DROP TABLE IF EXISTS `nhanvien_counter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `nhanvien_counter` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `current_number` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `nhanvien_counter`
+--
+
+LOCK TABLES `nhanvien_counter` WRITE;
+/*!40000 ALTER TABLE `nhanvien_counter` DISABLE KEYS */;
+INSERT INTO `nhanvien_counter` VALUES (1,6);
+/*!40000 ALTER TABLE `nhanvien_counter` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `phong`
+--
 
 DROP TABLE IF EXISTS `phong`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -768,7 +850,7 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8mb4 */ ;
 /*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode     qlktx         = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteTtThuePhongAndUpdateThuePhong`(
     IN p_ma_hop_dong INT,
@@ -810,7 +892,7 @@ END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @savADDed_cs_results */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -823,36 +905,3 @@ DELIMITER ;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2024-11-15  1:07:57
-
--- Tạo bảng Hợp Đồng (Liên kết với Sinh Viên và Phòng)
-CREATE TABLE HopDong (
-    MaHD VARCHAR(10) PRIMARY KEY,
-    ma_sinh_vien VARCHAR(8) NOT NULL,
-    ma_phong VARCHAR(7) NOT NULL,
-    NgayBatDau DATE NOT NULL,
-    NgayKetThuc DATE NOT NULL,
-    TinhTrang ENUM('Còn hiệu lực', 'Hết hạn') DEFAULT 'Còn hiệu lực',
-    FOREIGN KEY (ma_sinh_vien) REFERENCES SinhVien(ma_sinh_vien) ON DELETE CASCADE,
-    FOREIGN KEY (ma_phong) REFERENCES Phong(ma_phong) ON DELETE CASCADE
-);
-
--- Tạo bảng Thanh Toán (Liên kết với Sinh Viên)
-CREATE TABLE ThanhToan (
-    MaTT VARCHAR(10) PRIMARY KEY,
-   MaHD VARCHAR(10) NOT NULL,
-    ma_sinh_vien VARCHAR(10) NOT NULL,
-    ThangThanhToan INT NOT NULL,
-    NamThanhToan INT NOT NULL,
-    SoTien DECIMAL(10,2) NOT NULL,
-    TrangThai ENUM('Chưa thanh toán', 'Đã thanh toán') DEFAULT 'Chưa thanh toán',
-   FOREIGN KEY (MaHD) REFERENCES HopDong(MaHD) ON DELETE CASCADE
-);
-
-INSERT INTO HopDong (MaHD, ma_sinh_vien, ma_phong, NgayBatDau, NgayKetThuc, TinhTrang) VALUES 
-('HD001', 'B2111875', 'AC01001', '2024-01-01', '2024-12-31', 'Còn hiệu lực'),
-('HD002', 'B2111881', 'AC01002', '2024-02-01', '2024-12-31', 'Còn hiệu lực');
-
--- Chèn dữ liệu mẫu vào bảng Thanh Toán
-INSERT INTO ThanhToan (MaTT, MaHD,ThangThanhToan, NamThanhToan, SoTien, TrangThai) VALUES 
-('TT001', 'HD001', 1, 2024, 500000, 'Đã thanh toán'),
-('TT002', 'HD002', 1, 2024, 1000000, 'Chưa thanh toán');
