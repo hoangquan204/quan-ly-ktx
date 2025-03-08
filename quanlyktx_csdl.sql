@@ -18,9 +18,11 @@
 --
 -- Table structure for table `hoc_ky`
 --
+--
 drop database if exists `qlktx`;
 create database qlktx;
 use qlktx;
+
 
 DROP TABLE IF EXISTS `hoc_ky`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -64,7 +66,8 @@ CREATE TABLE `lop` (
 
 LOCK TABLES `lop` WRITE;
 /*!40000 ALTER TABLE `lop` DISABLE KEYS */;
-INSERT INTO `lop` VALUES ('CNTT','Công nghệ thông tin'),('KDNG','Kinh doanh nông nghiệp'),('KTNN','Kinh tế nông nghiệp'),('LHC','Luật hành chính'),('NNA','Ngôn Ngữ Anh'),('QTKD','Quản trị kinh doanh');
+INSERT INTO `lop` VALUES 
+('ATTT','An toàn thông tin'),('CNSH','Công nghệ sinh học'),('CNTP','Công nghệ thực phẩm'),('CNTT','Công nghệ thông tin'),('HTTT','Hệ thống thông tin'),('KDNG','Kinh doanh nông nghiệp'),('KHMT','Khoa học môi trường'),('KT','Kế toán'),('KTNN','Kinh tế nông nghiệp'),('KTPM','Kỹ thuật phần mềm'),('KTXD','Kỹ thuật xây dựng'),('LHC','Luật hành chính'),('NNA','Ngôn Ngữ Anh'),('NTTS','Nuôi trồng thủy sản'),('QTKD','Quản trị kinh doanh'),('TCNH','Tài chính - ngân hàng'),('TY','Thú y');
 /*!40000 ALTER TABLE `lop` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,37 +94,10 @@ CREATE TABLE `nhanvien` (
 
 LOCK TABLES `nhanvien` WRITE;
 /*!40000 ALTER TABLE `nhanvien` DISABLE KEYS */;
-INSERT INTO `nhanvien` VALUES ('NVKTXA00','admin','1234567890','admin','e10adc3949ba59abbe56e057f20f883e'),('NVKTXA01','Nguyễn Hoài Đức','0898821595','nhan vien','e10adc3949ba59abbe56e057f20f883e'),('NVKTXA03','Hồ Hoàng Hảo','0989765432','nhan vien','e10adc3949ba59abbe56e057f20f883e'),('NVKTXA04','Trịnh Huỳnh Phúc Khang','0989765432','nhan vien','e10adc3949ba59abbe56e057f20f883e'),('NVKTXA05','Trương Hoàng Anh','0988133860','nhan vien','e10adc3949ba59abbe56e057f20f883e');
+INSERT INTO `nhanvien` VALUES 
+('NVKTXA00','admin','1234567890','admin','e10adc3949ba59abbe56e057f20f883e'),('NVKTXA01','Nguyễn Hoài Đức','0898821595','nhan vien','e10adc3949ba59abbe56e057f20f883e'),('NVKTXA03','Hồ Hoàng Hảo','0989765432','nhan vien','e10adc3949ba59abbe56e057f20f883e'),('NVKTXA04','Trịnh Huỳnh Phúc Khang','0989765432','nhan vien','e10adc3949ba59abbe56e057f20f883e'),('NVKTXA05','Trương Hoàng Anh','0988133860','nhan vien','e10adc3949ba59abbe56e057f20f883e');
 /*!40000 ALTER TABLE `nhanvien` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `before_delete_nhanvien` BEFORE DELETE ON `nhanvien` FOR EACH ROW BEGIN
-    DECLARE count_records INT;
-    
-    -- Đếm số bản ghi trong tt_thuephong có ma_nhan_vien cần xóa
-    SELECT COUNT(*) INTO count_records 
-    FROM tt_thuephong 
-    WHERE ma_nhan_vien = OLD.ma_nhan_vien;
-    
-    -- Nếu có bản ghi thì ném ra lỗi
-    IF count_records > 0 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Không thể xóa nhân viên này vì đã có dữ liệu thanh toán thuê phòng liên quan';
-    END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `nhanvien_counter`
@@ -143,7 +119,7 @@ CREATE TABLE `nhanvien_counter` (
 
 LOCK TABLES `nhanvien_counter` WRITE;
 /*!40000 ALTER TABLE `nhanvien_counter` DISABLE KEYS */;
-INSERT INTO `nhanvien_counter` VALUES (1,6);
+INSERT INTO `nhanvien_counter` VALUES (1,2);
 /*!40000 ALTER TABLE `nhanvien_counter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,7 +136,7 @@ CREATE TABLE `phong` (
   `loai_phong` varchar(3) DEFAULT NULL,
   `dien_tich` float DEFAULT NULL,
   `so_giuong` int DEFAULT NULL,
-  `gia_thue` decimal(10,0) DEFAULT NULL,
+  `gia_thue` decimal(10) DEFAULT NULL,
   `gioi_tinh` varchar(5) NOT NULL DEFAULT 'none',
   PRIMARY KEY (`ma_phong`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -172,7 +148,111 @@ CREATE TABLE `phong` (
 
 LOCK TABLES `phong` WRITE;
 /*!40000 ALTER TABLE `phong` DISABLE KEYS */;
-INSERT INTO `phong` VALUES ('AC01001','Phòng 1 dãy C1 ',NULL,30,8,290000,'nam'),('AC01002','Phòng 2 dãy C1 ',NULL,30,8,290000,'nam'),('AC01003','Phòng 3 dãy C1 ',NULL,30,8,290000,'nam'),('AC01004','Phòng 4 dãy C1 ',NULL,30,8,290000,'nam'),('AC01005','Phòng 5 dãy C1 ',NULL,30,8,290000,'nam'),('AC01006','Phòng 6 dãy C1 ',NULL,30,8,290000,'nam'),('AC01007','Phòng 7 dãy C1 ',NULL,30,8,290000,'nam'),('AC01008','Phòng 8 dãy C1 ',NULL,30,8,290000,'nam'),('AC01009','Phòng 9 dãy C1 ',NULL,30,8,290000,'nam'),('AC01010','Phòng 10 dãy C1 ',NULL,30,8,290000,'nam'),('AC01011','Phòng 11 dãy C1 ',NULL,30,8,290000,'nu'),('AC01012','Phòng 12 dãy C1 ',NULL,30,8,290000,'nu'),('AC01013','Phòng 13 dãy C1 ',NULL,30,8,290000,'nu'),('AC01014','Phòng 14 dãy C1 ',NULL,30,8,290000,'nu'),('AC01015','Phòng 15 dãy C1 ',NULL,30,8,290000,'nu'),('AC01016','Phòng 16 dãy C1 ',NULL,30,8,290000,'nu'),('AC01017','Phòng 17 dãy C1 ',NULL,30,8,290000,'nu'),('AC01018','Phòng 18 dãy C1 ',NULL,30,8,290000,'nu'),('AC01019','Phòng 19 dãy C1 ',NULL,30,8,290000,'nu'),('AC01020','Phòng 20 dãy C1 ',NULL,30,8,290000,'nu'),('AC02001','Phòng 1 dãy C2 ',NULL,35,8,320000,'nam'),('AC02002','Phòng 2 dãy C2 ',NULL,35,8,320000,'nam'),('AC02003','Phòng 3 dãy C2 ',NULL,35,8,320000,'nam'),('AC02004','Phòng 4 dãy C2 ',NULL,35,8,320000,'nam'),('AC02005','Phòng 5 dãy C2 ',NULL,35,8,320000,'nam'),('AC02006','Phòng 6 dãy C2 ',NULL,35,8,320000,'nam'),('AC02007','Phòng 7 dãy C2 ',NULL,35,8,320000,'nam'),('AC02008','Phòng 8 dãy C2 ',NULL,35,8,320000,'nam'),('AC02009','Phòng 9 dãy C2 ',NULL,35,8,320000,'nam'),('AC02010','Phòng 10 dãy C2 ',NULL,35,8,320000,'nam'),('AC02011','Phòng 11 dãy C2 ',NULL,35,8,320000,'nu'),('AC02012','Phòng 12 dãy C2 ',NULL,35,8,320000,'nu'),('AC02013','Phòng 13 dãy C2 ',NULL,35,8,320000,'nu'),('AC02014','Phòng 14 dãy C2 ',NULL,35,8,320000,'nu'),('AC02015','Phòng 15 dãy C2 ',NULL,35,8,320000,'nu'),('AC02016','Phòng 16 dãy C2 ',NULL,35,8,320000,'nu'),('AC02017','Phòng 17 dãy C2 ',NULL,35,8,320000,'nu'),('AC02018','Phòng 18 dãy C2 ',NULL,35,8,320000,'nu'),('AC02019','Phòng 19 dãy C2 ',NULL,35,8,320000,'nu'),('AC02020','Phòng 20 dãy C2 ',NULL,35,8,320000,'nu'),('AC03001','Phòng 1 dãy C3 ',NULL,25,4,320000,'nam'),('AC03002','Phòng 2 dãy C3 ',NULL,25,4,320000,'nam'),('AC03003','Phòng 3 dãy C3 ',NULL,25,4,320000,'nam'),('AC03004','Phòng 4 dãy C3 ',NULL,25,4,320000,'nam'),('AC03005','Phòng 5 dãy C3 ',NULL,25,4,320000,'nam'),('AC03006','Phòng 6 dãy C3 ',NULL,25,4,320000,'nam'),('AC03007','Phòng 7 dãy C3 ',NULL,25,4,320000,'nam'),('AC03008','Phòng 8 dãy C3 ',NULL,25,4,320000,'nam'),('AC03009','Phòng 9 dãy C3 ',NULL,25,4,320000,'nam'),('AC03010','Phòng 10 dãy C3 ',NULL,25,4,320000,'nam'),('AC03011','Phòng 11 dãy C3 ',NULL,25,4,320000,'nu'),('AC03012','Phòng 12 dãy C3 ',NULL,25,4,320000,'nu'),('AC03013','Phòng 13 dãy C3 ',NULL,25,4,320000,'nu'),('AC03014','Phòng 14 dãy C3 ',NULL,25,4,320000,'nu'),('AC03015','Phòng 15 dãy C3 ',NULL,25,4,320000,'nu'),('AC03016','Phòng 16 dãy C3 ',NULL,25,4,320000,'nu'),('AC03017','Phòng 17 dãy C3 ',NULL,25,4,320000,'nu'),('AC03018','Phòng 18 dãy C3 ',NULL,25,4,320000,'nu'),('AC03019','Phòng 19 dãy C3 ',NULL,25,4,320000,'nu'),('AC03020','Phòng 20 dãy C3 ',NULL,25,4,320000,'nu'),('AC04001','Phòng 1 dãy C4 ',NULL,30,6,380000,'nam'),('AC04002','Phòng 2 dãy C4 ',NULL,30,6,380000,'nam'),('AC04003','Phòng 3 dãy C4 ',NULL,30,6,380000,'nam'),('AC04004','Phòng 4 dãy C4 ',NULL,30,6,380000,'nam'),('AC04005','Phòng 5 dãy C4 ',NULL,30,6,380000,'nam'),('AC04006','Phòng 6 dãy C4 ',NULL,30,6,380000,'nam'),('AC04007','Phòng 7 dãy C4 ',NULL,30,6,380000,'nam'),('AC04008','Phòng 8 dãy C4 ',NULL,30,6,380000,'nam'),('AC04009','Phòng 9 dãy C4 ',NULL,30,6,380000,'nam'),('AC04010','Phòng 10 dãy C4 ',NULL,30,6,380000,'nam'),('AC04011','Phòng 11 dãy C4 ',NULL,30,6,380000,'nu'),('AC04012','Phòng 12 dãy C4 ',NULL,30,6,380000,'nu'),('AC04013','Phòng 13 dãy C4 ',NULL,30,6,380000,'nu'),('AC04014','Phòng 14 dãy C4 ',NULL,30,6,380000,'nu'),('AC04015','Phòng 15 dãy C4 ',NULL,30,6,380000,'nu'),('AC04016','Phòng 16 dãy C4 ',NULL,30,6,380000,'nu'),('AC04017','Phòng 17 dãy C4 ',NULL,30,6,380000,'nu'),('AC04018','Phòng 18 dãy C4 ',NULL,30,6,380000,'nu'),('AC04019','Phòng 19 dãy C4 ',NULL,30,6,380000,'nu'),('AC04020','Phòng 20 dãy C4 ',NULL,30,6,380000,'nu'),('AC05001','Phòng 1 dãy C5 ',NULL,38,8,390000,'nam'),('AC05002','Phòng 2 dãy C5 ',NULL,38,8,390000,'nam'),('AC05003','Phòng 3 dãy C5 ',NULL,38,8,390000,'nam'),('AC05004','Phòng 4 dãy C5 ',NULL,38,8,390000,'nam'),('AC05006','Phòng 6 dãy C5 ',NULL,38,8,390000,'nam'),('AC05007','Phòng 7 dãy C5 ',NULL,38,8,390000,'nam'),('AC05008','Phòng 8 dãy C5 ',NULL,38,8,390000,'nam'),('AC05009','Phòng 9 dãy C5 ',NULL,38,8,390000,'nam'),('AC05010','Phòng 10 dãy C5 ',NULL,38,8,390000,'nam'),('AC05011','Phòng 11 dãy C5 ',NULL,38,8,390000,'nu'),('AC05012','Phòng 12 dãy C5 ',NULL,38,8,390000,'nu'),('AC05013','Phòng 13 dãy C5 ',NULL,38,8,390000,'nu'),('AC05014','Phòng 14 dãy C5 ',NULL,38,8,390000,'nu'),('AC05015','Phòng 15 dãy C5 ',NULL,38,8,390000,'nu'),('AC05016','Phòng 16 dãy C5 ',NULL,38,8,390000,'nu'),('AC05017','Phòng 17 dãy C5 ',NULL,38,8,390000,'nu'),('AC05018','Phòng 18 dãy C5 ',NULL,38,8,390000,'nu'),('AC05019','Phòng 19 dãy C5 ',NULL,38,8,390000,'nu'),('AC05020','Phòng 20 dãy C5 ',NULL,38,8,390000,'nu');
+INSERT INTO `phong` VALUES 
+('AC01001','Phòng 1 dãy C1 ',NULL,30,8,290000.00,'nam'),
+('AC01002','Phòng 2 dãy C1 ',NULL,30,8,290000.00,'nam'),
+('AC01003','Phòng 3 dãy C1 ',NULL,30,8,290000.00,'nam'),
+('AC01004','Phòng 4 dãy C1 ',NULL,30,8,290000.00,'nam'),
+('AC01005','Phòng 5 dãy C1 ',NULL,30,8,290000.00,'nam'),
+('AC01006','Phòng 6 dãy C1 ',NULL,30,8,290000.00,'nam'),
+('AC01007','Phòng 7 dãy C1 ',NULL,30,8,290000.00,'nam'),
+('AC01008','Phòng 8 dãy C1 ',NULL,30,8,290000.00,'nam'),
+('AC01009','Phòng 9 dãy C1 ',NULL,30,8,290000.00,'nam'),
+('AC01010','Phòng 10 dãy C1 ',NULL,30,8,290000.00,'nam'),
+('AC01011','Phòng 11 dãy C1 ',NULL,30,8,290000.00,'nu'),
+('AC01012','Phòng 12 dãy C1 ',NULL,30,8,290000.00,'nu'),
+('AC01013','Phòng 13 dãy C1 ',NULL,30,8,290000.00,'nu'),
+('AC01014','Phòng 14 dãy C1 ',NULL,30,8,290000.00,'nu'),
+('AC01015','Phòng 15 dãy C1 ',NULL,30,8,290000.00,'nu'),
+('AC01016','Phòng 16 dãy C1 ',NULL,30,8,290000.00,'nu'),
+('AC01017','Phòng 17 dãy C1 ',NULL,30,8,290000.00,'nu'),
+('AC01018','Phòng 18 dãy C1 ',NULL,30,8,290000.00,'nu'),
+('AC01019','Phòng 19 dãy C1 ',NULL,30,8,290000.00,'nu'),
+('AC01020','Phòng 20 dãy C1 ',NULL,30,8,290000.00,'nu'),
+
+('AC02001','Phòng 1 dãy C2 ',NULL,35,8,320000.00,'nam'),
+('AC02002','Phòng 2 dãy C2 ',NULL,35,8,320000.00,'nam'),
+('AC02003','Phòng 3 dãy C2 ',NULL,35,8,320000.00,'nam'),
+('AC02004','Phòng 4 dãy C2 ',NULL,35,8,320000.00,'nam'),
+('AC02005','Phòng 5 dãy C2 ',NULL,35,8,320000.00,'nam'),
+('AC02006','Phòng 6 dãy C2 ',NULL,35,8,320000.00,'nam'),
+('AC02007','Phòng 7 dãy C2 ',NULL,35,8,320000.00,'nam'),
+('AC02008','Phòng 8 dãy C2 ',NULL,35,8,320000.00,'nam'),
+('AC02009','Phòng 9 dãy C2 ',NULL,35,8,320000.00,'nam'),
+('AC02010','Phòng 10 dãy C2 ',NULL,35,8,320000.00,'nam'),
+('AC02011','Phòng 11 dãy C2 ',NULL,35,8,320000.00,'nu'),
+('AC02012','Phòng 12 dãy C2 ',NULL,35,8,320000.00,'nu'),
+('AC02013','Phòng 13 dãy C2 ',NULL,35,8,320000.00,'nu'),
+('AC02014','Phòng 14 dãy C2 ',NULL,35,8,320000.00,'nu'),
+('AC02015','Phòng 15 dãy C2 ',NULL,35,8,320000.00,'nu'),
+('AC02016','Phòng 16 dãy C2 ',NULL,35,8,320000.00,'nu'),
+('AC02017','Phòng 17 dãy C2 ',NULL,35,8,320000.00,'nu'),
+('AC02018','Phòng 18 dãy C2 ',NULL,35,8,320000.00,'nu'),
+('AC02019','Phòng 19 dãy C2 ',NULL,35,8,320000.00,'nu'),
+('AC02020','Phòng 20 dãy C2 ',NULL,35,8,320000.00,'nu'),
+
+('AC03001','Phòng 1 dãy C3 ',NULL,25,4,320000.00,'nam'),
+('AC03002','Phòng 2 dãy C3 ',NULL,25,4,320000.00,'nam'),
+('AC03003','Phòng 3 dãy C3 ',NULL,25,4,320000.00,'nam'),
+('AC03004','Phòng 4 dãy C3 ',NULL,25,4,320000.00,'nam'),
+('AC03005','Phòng 5 dãy C3 ',NULL,25,4,320000.00,'nam'),
+('AC03006','Phòng 6 dãy C3 ',NULL,25,4,320000.00,'nam'),
+('AC03007','Phòng 7 dãy C3 ',NULL,25,4,320000.00,'nam'),
+('AC03008','Phòng 8 dãy C3 ',NULL,25,4,320000.00,'nam'),
+('AC03009','Phòng 9 dãy C3 ',NULL,25,4,320000.00,'nam'),
+('AC03010','Phòng 10 dãy C3 ',NULL,25,4,320000.00,'nam'),
+('AC03011','Phòng 11 dãy C3 ',NULL,25,4,320000.00,'nu'),
+('AC03012','Phòng 12 dãy C3 ',NULL,25,4,320000.00,'nu'),
+('AC03013','Phòng 13 dãy C3 ',NULL,25,4,320000.00,'nu'),
+('AC03014','Phòng 14 dãy C3 ',NULL,25,4,320000.00,'nu'),
+('AC03015','Phòng 15 dãy C3 ',NULL,25,4,320000.00,'nu'),
+('AC03016','Phòng 16 dãy C3 ',NULL,25,4,320000.00,'nu'),
+('AC03017','Phòng 17 dãy C3 ',NULL,25,4,320000.00,'nu'),
+('AC03018','Phòng 18 dãy C3 ',NULL,25,4,320000.00,'nu'),
+('AC03019','Phòng 19 dãy C3 ',NULL,25,4,320000.00,'nu'),
+('AC03020','Phòng 20 dãy C3 ',NULL,25,4,320000.00,'nu'),
+
+('AC04001','Phòng 1 dãy C4 ',NULL,30,6,380000.00,'nam'),
+('AC04002','Phòng 2 dãy C4 ',NULL,30,6,380000.00,'nam'),
+('AC04003','Phòng 3 dãy C4 ',NULL,30,6,380000.00,'nam'),
+('AC04004','Phòng 4 dãy C4 ',NULL,30,6,380000.00,'nam'),
+('AC04005','Phòng 5 dãy C4 ',NULL,30,6,380000.00,'nam'),
+('AC04006','Phòng 6 dãy C4 ',NULL,30,6,380000.00,'nam'),
+('AC04007','Phòng 7 dãy C4 ',NULL,30,6,380000.00,'nam'),
+('AC04008','Phòng 8 dãy C4 ',NULL,30,6,380000.00,'nam'),
+('AC04009','Phòng 9 dãy C4 ',NULL,30,6,380000.00,'nam'),
+('AC04010','Phòng 10 dãy C4 ',NULL,30,6,380000.00,'nam'),
+('AC04011','Phòng 11 dãy C4 ',NULL,30,6,380000.00,'nu'),
+('AC04012','Phòng 12 dãy C4 ',NULL,30,6,380000.00,'nu'),
+('AC04013','Phòng 13 dãy C4 ',NULL,30,6,380000.00,'nu'),
+('AC04014','Phòng 14 dãy C4 ',NULL,30,6,380000.00,'nu'),
+('AC04015','Phòng 15 dãy C4 ',NULL,30,6,380000.00,'nu'),
+('AC04016','Phòng 16 dãy C4 ',NULL,30,6,380000.00,'nu'),
+('AC04017','Phòng 17 dãy C4 ',NULL,30,6,380000.00,'nu'),
+('AC04018','Phòng 18 dãy C4 ',NULL,30,6,380000.00,'nu'),
+('AC04019','Phòng 19 dãy C4 ',NULL,30,6,380000.00,'nu'),
+('AC04020','Phòng 20 dãy C4 ',NULL,30,6,380000.00,'nu'),
+
+('AC05001','Phòng 1 dãy C5 ',NULL,38,8,390000.00,'nam'),
+('AC05002','Phòng 2 dãy C5 ',NULL,38,8,390000.00,'nam'),
+('AC05003','Phòng 3 dãy C5 ',NULL,38,8,390000.00,'nam'),
+('AC05004','Phòng 4 dãy C5 ',NULL,38,8,390000.00,'nam'),
+('AC05005','Phòng 5 dãy C5 ',NULL,38,8,390000.00,'nam'),
+('AC05006','Phòng 6 dãy C5 ',NULL,38,8,390000.00,'nam'),
+('AC05007','Phòng 7 dãy C5 ',NULL,38,8,390000.00,'nam'),
+('AC05008','Phòng 8 dãy C5 ',NULL,38,8,390000.00,'nam'),
+('AC05009','Phòng 9 dãy C5 ',NULL,38,8,390000.00,'nam'),
+('AC05010','Phòng 10 dãy C5 ',NULL,38,8,390000.00,'nam'),
+('AC05011','Phòng 11 dãy C5 ',NULL,38,8,390000.00,'nu'),
+('AC05012','Phòng 12 dãy C5 ',NULL,38,8,390000.00,'nu'),
+('AC05013','Phòng 13 dãy C5 ',NULL,38,8,390000.00,'nu'),
+('AC05014','Phòng 14 dãy C5 ',NULL,38,8,390000.00,'nu'),
+('AC05015','Phòng 15 dãy C5 ',NULL,38,8,390000.00,'nu'),
+('AC05016','Phòng 16 dãy C5 ',NULL,38,8,390000.00,'nu'),
+('AC05017','Phòng 17 dãy C5 ',NULL,38,8,390000.00,'nu'),
+('AC05018','Phòng 18 dãy C5 ',NULL,38,8,390000.00,'nu'),
+('AC05019','Phòng 19 dãy C5 ',NULL,38,8,390000.00,'nu'),
+('AC05020','Phòng 20 dãy C5 ',NULL,38,8,390000.00,'nu');
 /*!40000 ALTER TABLE `phong` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -231,37 +311,10 @@ CREATE TABLE `sinhvien` (
 
 LOCK TABLES `sinhvien` WRITE;
 /*!40000 ALTER TABLE `sinhvien` DISABLE KEYS */;
-INSERT INTO `sinhvien` VALUES ('B2105600','A','nam','0987654321','CNTT','202cb962ac59075b964b07152d234b70',''),('B2111875','Huỳnh Văn An','nam','0835525253','CNTT','202cb962ac59075b964b07152d234b70','Hợp đồng thuê phòng của bạn đã bị xóa.'),('B2111881','Nguyễn Hoài Đức','nam','0898821595','CNTT','e10adc3949ba59abbe56e057f20f883e','Hợp đồng thuê phòng của bạn đã bị xóa.'),('B2111882','Nguyễn Văn A','nam','0898821598','KDNG','202cb962ac59075b964b07152d234b70',''),('B2401314','Quách Thúy Quyền','nu','0786789654','LHC','202cb962ac59075b964b07152d234b70',''),('B2401769','Lê Mỹ Như','nu','0939281902','QTKD','202cb962ac59075b964b07152d234b70',''),('B2401788','Nguyễn Ngọc Anh Thư','nu','0988172635','QTKD','202cb962ac59075b964b07152d234b70','Hợp đồng thuê phòng của bạn đã bị xóa.'),('B2401796','Chung Thị Hồng Yến','nu','0394987654','QTKD','202cb962ac59075b964b07152d234b70','Hợp đồng thuê phòng của bạn đã bị xóa.'),('B2402119','Nguyễn Ngọc Thảo','nu','0836827463','KTNN','202cb962ac59075b964b07152d234b70',''),('B2402123','Nguyễn Thị Ngọc Hân','nu','0837261890','KTNN','202cb962ac59075b964b07152d234b70','Hợp đồng thuê phòng của bạn đã bị xóa.'),('B2402215','Huỳnh Huyền Trân','nu','0865342516','KTNN','202cb962ac59075b964b07152d234b70',''),('B2402234','Nguyễn Ngọc Thảo Vy','nu','0975263456','KTNN','202cb962ac59075b964b07152d234b70',''),('B2403104','Lê Thị Mỹ Xuyên','nu','0788172639','LHC','202cb962ac59075b964b07152d234b70',''),('B2408340','Hứa Thị Ngọc Hân','nu','0860762538','NNA','202cb962ac59075b964b07152d234b70',''),('B2408388','Trần Ngọc Mẫn','nu','0965827390','NNA','202cb962ac59075b964b07152d234b70',''),('B2408404','Phạm Phan Chúc Ni','nu','0977263547','NNA','202cb962ac59075b964b07152d234b70',''),('B2408430','Nguyễn Thị Ngọc Trân','nu','0868450022','NNA','202cb962ac59075b964b07152d234b70',''),('B2408904','Trần Thanh Hà','nu','0976253410','CNTT','202cb962ac59075b964b07152d234b70',''),('B2408911','Nguyễn Minh Khôi','nam','0976524367','CNTT','202cb962ac59075b964b07152d234b70',''),('B2408925','Đoàn Khả Nguyên','nam','0912876536','CNTT','202cb962ac59075b964b07152d234b70',''),('B2408929','Lê Thị Mỹ Tâm','nu','0907998865','CNTT','202cb962ac59075b964b07152d234b70','');
+INSERT INTO `sinhvien` VALUES 
+('B2111875','Huỳnh Văn An','nam','0835525253','CNTT','202cb962ac59075b964b07152d234b70','Hợp đồng thuê phòng của bạn đã bị xóa.'),('B2111881','Nguyễn Hoài Đức','nam','0898821595','CNTT','e10adc3949ba59abbe56e057f20f883e',''),('B2111882','Nguyễn Văn A','nam','0898821598','KDNG','202cb962ac59075b964b07152d234b70',''),('B2401314','Quách Thúy Quyền','nu','0786789654','LHC','202cb962ac59075b964b07152d234b70',''),('B2401769','Lê Mỹ Như','nu','0939281902','QTKD','202cb962ac59075b964b07152d234b70',''),('B2401788','Nguyễn Ngọc Anh Thư','nu','0988172635','QTKD','202cb962ac59075b964b07152d234b70','Hợp đồng thuê phòng của bạn đã bị xóa.'),('B2401796','Chung Thị Hồng Yến','nu','0394987654','QTKD','202cb962ac59075b964b07152d234b70',''),('B2402119','Nguyễn Ngọc Thảo','nu','0836827463','KTNN','202cb962ac59075b964b07152d234b70',''),('B2402123','Nguyễn Thị Ngọc Hân','nu','0837261890','KTNN','202cb962ac59075b964b07152d234b70','Yêu cầu thuê phòng của bạn đã được duyệt.'),('B2402215','Huỳnh Huyền Trân','nu','0865342516','KTNN','202cb962ac59075b964b07152d234b70',''),('B2402234','Nguyễn Ngọc Thảo Vy','nu','0975263456','KTNN','202cb962ac59075b964b07152d234b70',''),('B2403104','Lê Thị Mỹ Xuyên','nu','0788172639','LHC','202cb962ac59075b964b07152d234b70',''),('B2408340','Hứa Thị Ngọc Hân','nu','0860762538','NNA','202cb962ac59075b964b07152d234b70',''),('B2408388','Trần Ngọc Mẫn','nu','0965827390','NNA','202cb962ac59075b964b07152d234b70',''),('B2408404','Phạm Phan Chúc Ni','nu','0977263547','NNA','202cb962ac59075b964b07152d234b70',''),('B2408430','Nguyễn Thị Ngọc Trân','nu','0868450022','NNA','202cb962ac59075b964b07152d234b70',''),('B2408904','Trần Thanh Hà','nu','0976253410','CNTT','202cb962ac59075b964b07152d234b70',''),('B2408911','Nguyễn Minh Khôi','nam','0976524367','CNTT','202cb962ac59075b964b07152d234b70',''),('B2408925','Đoàn Khả Nguyên','nam','0912876536','CNTT','202cb962ac59075b964b07152d234b70',''),('B2408929','Lê Thị Mỹ Tâm','nu','0907998865','CNTT','202cb962ac59075b964b07152d234b70','');
 /*!40000 ALTER TABLE `sinhvien` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `before_delete_sinhvien` BEFORE DELETE ON `sinhvien` FOR EACH ROW BEGIN
-    DECLARE renting_count INT;
-
-    -- Kiểm tra xem sinh viên có đang thuê phòng không
-    SELECT COUNT(*) INTO renting_count
-    FROM thuephong
-    WHERE ma_sinh_vien = OLD.ma_sinh_vien;
-
-    -- Nếu sinh viên đang thuê phòng, thông báo lỗi
-    IF renting_count > 0 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Không thể xóa sinh viên đang thuê phòng.';
-    END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `thuephong`
@@ -297,7 +350,8 @@ CREATE TABLE `thuephong` (
 
 LOCK TABLES `thuephong` WRITE;
 /*!40000 ALTER TABLE `thuephong` DISABLE KEYS */;
-INSERT INTO `thuephong` VALUES (19,'B2111881','AC05003','2024-09-01','2025-01-15',0.00,500000.00,'HK1',500000.00,'daduyet'),(20,'B2402123','AC05102','2024-09-01','2025-01-15',0.00,290000.00,'HK1',0.00,'daduyet');
+INSERT INTO `thuephong` VALUES 
+(19,'B2111881','AC05003','2024-09-01','2025-01-15',0.00,500000.00,'HK1',0.00,'daduyet'),(20,'B2402123','AC05102','2024-09-01','2025-01-15',0.00,290000.00,'HK1',0.00,'daduyet'),(21,'B2401796','AC05102','2024-09-01','2025-01-15',0.00,290000.00,'HK1',290000.00,'daduyet');
 /*!40000 ALTER TABLE `thuephong` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -393,18 +447,14 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb3 */ ;
-/*!50003 SET character_set_results = utf8mb3 */ ;
-/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `before_delete_thuephong_check_payment` BEFORE DELETE ON `thuephong` FOR EACH ROW BEGIN
-    -- Kiểm tra nếu cần thanh toán bằng 0
-    IF OLD.can_thanh_toan = 0 THEN
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Hợp đồng đã thanh toán không thể xóa.';
-    END IF;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `before_delete_thuephong` BEFORE DELETE ON `thuephong` FOR EACH ROW BEGIN
+    DELETE FROM tt_thuephong WHERE ma_hop_dong = OLD.ma_hop_dong;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -438,7 +488,7 @@ CREATE TABLE `tt_thuephong` (
 
 LOCK TABLES `tt_thuephong` WRITE;
 /*!40000 ALTER TABLE `tt_thuephong` DISABLE KEYS */;
-INSERT INTO `tt_thuephong` VALUES (20,'2024-11-01',290000.00,'2024-11-14','NVKTXA00');
+INSERT INTO `tt_thuephong` VALUES (19,'2024-11-01',500000.00,'2024-11-14','NVKTXA00'),(20,'2024-11-01',290000.00,'2024-11-14','NVKTXA00');
 /*!40000 ALTER TABLE `tt_thuephong` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -710,6 +760,29 @@ BEGIN
     RETURN total_rooms;
 END ;;
 DELIMITER ;
+
+
+DELIMITER //
+
+CREATE TRIGGER before_delete_sinhvien
+BEFORE DELETE ON sinhvien
+FOR EACH ROW
+BEGIN
+    DECLARE renting_count INT;
+
+    -- Kiểm tra xem sinh viên có đang thuê phòng không
+    SELECT COUNT(*) INTO renting_count
+    FROM thuephong
+    WHERE ma_sinh_vien = OLD.ma_sinh_vien;
+
+    -- Nếu sinh viên đang thuê phòng, thông báo lỗi
+    IF renting_count > 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Không thể xóa sinh viên đang thuê phòng.';
+    END IF;
+END //
+
+DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
@@ -842,58 +915,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DeleteTtThuePhongAndUpdateThuePhong` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode     qlktx         = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteTtThuePhongAndUpdateThuePhong`(
-    IN p_ma_hop_dong INT,
-    IN p_ma_nhan_vien VARCHAR(8)
-)
-BEGIN
-    DECLARE v_so_tien DECIMAL(10,2);
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
-    BEGIN
-        ROLLBACK;
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Có lỗi xảy ra trong quá trình xử lý';
-    END;
-    
-    START TRANSACTION;
-    
-    -- Lấy số tiền từ bản ghi cần xóa
-    SELECT so_tien INTO v_so_tien
-    FROM tt_thuephong
-    WHERE ma_hop_dong = p_ma_hop_dong AND ma_nhan_vien = p_ma_nhan_vien;
-    
-    IF v_so_tien IS NULL THEN
-        ROLLBACK;
-        SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Không tìm thấy bản ghi thanh toán';
-    END IF;
-    
-    -- Xóa bản ghi từ tt_thuephong
-    DELETE FROM tt_thuephong 
-    WHERE ma_hop_dong = p_ma_hop_dong AND ma_nhan_vien = p_ma_nhan_vien;
-    
-    -- Cập nhật can_thanh_toan trong thuephong
-    UPDATE thuephong 
-    SET can_thanh_toan = can_thanh_toan + v_so_tien
-    WHERE ma_hop_dong = p_ma_hop_dong;
-    
-    COMMIT;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -904,4 +925,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-15  1:07:57
+-- Dump completed on 2024-11-14 21:45:46

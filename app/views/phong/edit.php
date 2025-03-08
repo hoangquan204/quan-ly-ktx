@@ -12,19 +12,9 @@
 </head>
 
 <body>
-    <div class="container-fluid mt-3">
-        <div class="row">
-            <div class="col-md-12">
-                <?php include '../app/views/header.php'; ?>
-            </div>
-        </div>
-        <div class="row">
-            <div>
-                <?php include '../app/views/nav.php'; ?>
-            </div>
-            <div class="col-md-9">
-                <div class="content mt-4">
-                    <h1 class="mb-4">Sửa Phòng</h1>
+<?php include "../app/views/layout/header.php"; ?>
+<div class="container mt-4">
+                    <h1 class="mb-4">Sửa phòng</h1>
                     <?php if (!empty($errors)): ?>
                     <div class="alert alert-danger">
                         <ul>
