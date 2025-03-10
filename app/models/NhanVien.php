@@ -57,34 +57,48 @@ class NhanVien
         return empty($this->errors);
     }
 
+    public function maNhanVienExists(string $ma_nhan_vien): bool
+{
+    $stmt = $this->db->prepare("SELECT COUNT(*) FROM NhanVien WHERE ma_nhan_vien = :ma_nhan_vien");
+    $stmt->execute(['ma_nhan_vien' => $ma_nhan_vien]);
+    return $stmt->fetchColumn() > 0;
+}
+
+
     public function save(): bool
-    {
-        if ($this->exists()) {
-            $statement = $this->db->prepare(
-                'update NhanVien SET ho_ten = :ho_ten, so_dien_thoai = :so_dien_thoai, ghi_chu = :ghi_chu, password = :password where ma_nhan_vien = :ma_nhan_vien'
-            );
-            return $statement->execute([
-                'ho_ten' => $this->ho_ten,
-                'so_dien_thoai' => $this->so_dien_thoai,
-                'ghi_chu' => $this->ghi_chu,
-                'password' => $this->password,
-                'ma_nhan_vien' => $this->ma_nhan_vien
-            ]);
-        } else {
-            
-            $statement = $this->db->prepare(
-                'INSERT INTO NhanVien (ho_ten, so_dien_thoai, ghi_chu, password, ma_nhan_vien) VALUES (:ho_ten, :so_dien_thoai, :ghi_chu, :password, :ma_nhan_vien)'
-            );
-            $result = $statement->execute([
-                'ho_ten' => $this->ho_ten,
-                'so_dien_thoai' => $this->so_dien_thoai,
-                'ghi_chu' => $this->ghi_chu,
-                'password' => $this->password,
-                'ma_nhan_vien' => $this->generateMaNhanVien($this->db)
-            ]);
-            return $result;
-        }
+{
+    if ($this->exists()) {
+        // Cập nhật thông tin nhân viên nếu đã tồn tại
+        $statement = $this->db->prepare(
+            'UPDATE NhanVien SET ho_ten = :ho_ten, so_dien_thoai = :so_dien_thoai, ghi_chu = :ghi_chu, password = :password WHERE ma_nhan_vien = :ma_nhan_vien'
+        );
+        return $statement->execute([
+            'ho_ten' => $this->ho_ten,
+            'so_dien_thoai' => $this->so_dien_thoai,
+            'ghi_chu' => $this->ghi_chu,
+            'password' => $this->password,
+            'ma_nhan_vien' => $this->ma_nhan_vien
+        ]);
+    } else {
+        // Kiểm tra xem mã nhân viên đã tồn tại chưa trước khi tạo mới
+        do {
+            $newMaNhanVien = $this->generateMaNhanVien($this->db);
+        } while ($this->maNhanVienExists($newMaNhanVien)); // Lặp đến khi tìm được mã không trùng
+
+        // Thêm nhân viên mới
+        $statement = $this->db->prepare(
+            'INSERT INTO NhanVien (ho_ten, so_dien_thoai, ghi_chu, password, ma_nhan_vien) VALUES (:ho_ten, :so_dien_thoai, :ghi_chu, :password, :ma_nhan_vien)'
+        );
+        return $statement->execute([
+            'ho_ten' => $this->ho_ten,
+            'so_dien_thoai' => $this->so_dien_thoai,
+            'ghi_chu' => $this->ghi_chu,
+            'password' => $this->password,
+            'ma_nhan_vien' => $newMaNhanVien
+        ]);
     }
+}
+
     function generateMaNhanVien($pdo)
     {
         // Lấy số thứ tự hiện tại

@@ -1,53 +1,85 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản Lý KTX - Dashboard</title>
+    <title>Thông Tin Cá Nhân</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f6f9;
+        }
+        .dashboard-container {
+            margin-top: 50px;
+        }
+        .card-custom {
+            border: none;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #ffffff;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+        }
+        .card-custom:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        .card-custom i {
+            font-size: 3rem;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+        .card-custom h5 {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
 </head>
 <body>
 
 <?php include "../app/views/layout/header.php"; ?>
 
-<div class="container mt-4">
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-        <div class="col">
-            <div class="card text-center p-3">
-            <i class="fas fa-user fa-3x mb-2"></i>
-                <h5 class="card-title">Thông tin cá nhân</h5>
-                <p class="card-text">Xem và cập nhật thông tin của bạn trên hệ thống.</p>
-                <a href="/my-info" class="btn btn-light">Xem chi tiết</a>
-            </div>
+<div class="container dashboard-container">
+    <div class="row g-4">
+        
+        <div class="col-md-4">
+            <a href="/my-info">
+                <div class="card-custom">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h5>Thông tin cá nhân</h5>
+                    <p>Quản lý thông tin cá nhân của sinh viên.</p>
+                </div>
+            </a>
         </div>
         
-        <div class="col">
-            <div class="card text-center p-3">
-                <i class="fas fa-bed fa-3x mb-2"></i>
-                <h5 class="card-title">Phòng đang ở</h5>
-                <p class="card-text">Xem trạng thái của phòng bạn đang ở.</p>
-                <a href="/current" class="btn btn-light">Xem chi tiết</a>
-            </div>
+        <div class="col-md-4">
+            <a href="/phong">
+                <div class="card-custom">
+                    <i class="fas fa-hotel"></i>
+                    <h5>Danh sách phòng</h5>
+                    <p>Danh sách phòng có trên hệ thống.</p>
+                </div>
+            </a>
         </div>
         
-        <div class="col">
-            <div class="card text-center p-3">
-                <i class="fas fa-list fa-3x mb-2"></i>
-                <h5 class="card-title">Danh sách phòng</h5>
-                <p class="card-text">Xem danh dách phòng có trên hệ thống.</p>
-                <a href="/phong" class="btn btn-light">Xem chi tiết</a>
-            </div>
-        </div>
-        
-        <div class="col">
-            <div class="card text-center p-3">
-                <i class="fas fa-money-bill fa-3x mb-2"></i>
-                <h5 class="card-title">Thanh toán hóa đơn</h5>
-                <p class="card-text">Thanh toán và xem lịch sử thanh toán hóa đơn.</p>
-                <a href="#" class="btn btn-light">Xem chi tiết</a>
-            </div>
+        <div class="col-md-4">
+            <a href="/current">
+                <div class="card-custom">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h5>Phòng của bạn</h5>
+                    <p>Thông tin về phòng của bạn đang ở.</p>
+                </div>
+            </a>
         </div>
     </div>
 </div>
